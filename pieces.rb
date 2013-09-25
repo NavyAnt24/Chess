@@ -141,6 +141,7 @@ class Pawn < Piece
     position_dup = @position.dup
     object_dup = self.class.new(position_dup, self.color)
     object_dup.move_diff = @move_diff.dup
+    object_dup
   end
 
 end
