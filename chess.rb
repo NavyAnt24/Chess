@@ -14,14 +14,9 @@ class Chess
       puts "It's #{current_player}'s turn."
       begin
         puts "What piece would you like to move? (e.g. f2)"
-        move_from_col, move_from_row = gets.chomp.split("")
+        move_from = get_algebraic
         puts "Where would you like to move to? (e.g. f2)"
-        move_to_col, move_to_row = gets.chomp.split("")
-        move_from_col = COLS.index(move_from_col)
-        move_to_col = COLS.index(move_to_col)
-
-        move_from = [move_from_row.to_i - 1, move_from_col]
-        move_to = [move_to_row.to_i - 1, move_to_col]
+        move_to = get_algebraic
 
         @board.move(move_from, move_to)
       rescue MoveError => e
@@ -33,7 +28,15 @@ class Chess
     @board.print_board
     puts "Checkmate!"
   end
+
+  def get_algebraic
+    col, row = gets.chomp.split("")
+    col = COLS.index(col)
+    row = row.to_i - 1
+    [row, col]
+  end
 end
+
 
 
 if __FILE__ == $PROGRAM_NAME
