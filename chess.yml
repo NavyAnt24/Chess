@@ -1,0 +1,673 @@
+--- !ruby/object:Chess
+board: !ruby/object:Board
+  grid:
+  - - 
+    - 
+    - !ruby/object:Queen
+      position:
+      - 0
+      - 2
+      color: :white
+      mark: !ruby/string
+        str: Q
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: Q
+          background: 9
+          mode: 0
+      move_vector:
+      - - 1
+        - 1
+      - - 1
+        - -1
+      - - -1
+        - 1
+      - - -1
+        - -1
+      - - 1
+        - 0
+      - - -1
+        - 0
+      - - 0
+        - 1
+      - - 0
+        - -1
+    - 
+    - 
+    - !ruby/object:Bishop
+      position:
+      - 0
+      - 5
+      color: :black
+      mark: !ruby/string
+        str: B
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: B
+          background: 9
+          mode: 0
+      move_vector:
+      - - 1
+        - 1
+      - - 1
+        - -1
+      - - -1
+        - 1
+      - - -1
+        - -1
+    - !ruby/object:Knight
+      position:
+      - 0
+      - 6
+      color: :black
+      mark: !ruby/string
+        str: N
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: N
+          background: 9
+          mode: 0
+      move_diff:
+      - - 1
+        - 2
+      - - -1
+        - 2
+      - - 2
+        - 1
+      - - 2
+        - -1
+      - - 1
+        - -2
+      - - -1
+        - -2
+      - - -2
+        - -1
+      - - -2
+        - 1
+    - !ruby/object:Rook
+      position:
+      - 0
+      - 7
+      color: :black
+      mark: !ruby/string
+        str: R
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: R
+          background: 9
+          mode: 0
+      move_vector:
+      - - 1
+        - 0
+      - - -1
+        - 0
+      - - 0
+        - 1
+      - - 0
+        - -1
+  - - 
+    - 
+    - 
+    - 
+    - !ruby/object:Pawn
+      position:
+      - 1
+      - 4
+      color: :black
+      mark: !ruby/string
+        str: P
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: P
+          background: 9
+          mode: 0
+      move_diff:
+      - - 1
+        - 0
+      - - 2
+        - 0
+      capture_diff:
+      - - 1
+        - 1
+      - - 1
+        - -1
+    - 
+    - !ruby/object:Pawn
+      position:
+      - 1
+      - 6
+      color: :black
+      mark: !ruby/string
+        str: P
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: P
+          background: 9
+          mode: 0
+      move_diff:
+      - - 1
+        - 0
+      - - 2
+        - 0
+      capture_diff:
+      - - 1
+        - 1
+      - - 1
+        - -1
+    - !ruby/object:Queen
+      position:
+      - 1
+      - 7
+      color: :black
+      mark: !ruby/string
+        str: Q
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: Q
+          background: 9
+          mode: 0
+      move_vector:
+      - - 1
+        - 1
+      - - 1
+        - -1
+      - - -1
+        - 1
+      - - -1
+        - -1
+      - - 1
+        - 0
+      - - -1
+        - 0
+      - - 0
+        - 1
+      - - 0
+        - -1
+  - - 
+    - 
+    - 
+    - 
+    - 
+    - !ruby/object:Pawn
+      position:
+      - 2
+      - 5
+      color: :black
+      mark: !ruby/string
+        str: P
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: P
+          background: 9
+          mode: 0
+      move_diff:
+      - - 1
+        - 0
+      capture_diff:
+      - - 1
+        - 1
+      - - 1
+        - -1
+    - !ruby/object:King
+      position:
+      - 2
+      - 6
+      color: :black
+      mark: !ruby/string
+        str: K
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: K
+          background: 9
+          mode: 0
+      move_diff:
+      - - 1
+        - 1
+      - - 1
+        - -1
+      - - -1
+        - 1
+      - - -1
+        - -1
+      - - 1
+        - 0
+      - - -1
+        - 0
+      - - 0
+        - 1
+      - - 0
+        - -1
+    - !ruby/object:Rook
+      position:
+      - 2
+      - 7
+      color: :black
+      mark: !ruby/string
+        str: R
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: R
+          background: 9
+          mode: 0
+      move_vector:
+      - - 1
+        - 0
+      - - -1
+        - 0
+      - - 0
+        - 1
+      - - 0
+        - -1
+  - - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - !ruby/object:Pawn
+      position:
+      - 3
+      - 7
+      color: :black
+      mark: !ruby/string
+        str: P
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: P
+          background: 9
+          mode: 0
+      move_diff:
+      - - 1
+        - 0
+      capture_diff:
+      - - 1
+        - 1
+      - - 1
+        - -1
+  - - 
+    - 
+    - !ruby/object:Pawn
+      position:
+      - 4
+      - 2
+      color: :white
+      mark: !ruby/string
+        str: P
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: P
+          background: 9
+          mode: 0
+      move_diff:
+      - - -1
+        - 0
+      capture_diff:
+      - - -1
+        - 1
+      - - -1
+        - -1
+    - 
+    - 
+    - 
+    - 
+    - !ruby/object:Pawn
+      position:
+      - 4
+      - 7
+      color: :white
+      mark: !ruby/string
+        str: P
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: P
+          background: 9
+          mode: 0
+      move_diff:
+      - - -1
+        - 0
+      capture_diff:
+      - - -1
+        - 1
+      - - -1
+        - -1
+  - - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+  - - !ruby/object:Pawn
+      position:
+      - 6
+      - 0
+      color: :white
+      mark: !ruby/string
+        str: P
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: P
+          background: 9
+          mode: 0
+      move_diff:
+      - - -1
+        - 0
+      - - -2
+        - 0
+      capture_diff:
+      - - -1
+        - 1
+      - - -1
+        - -1
+    - !ruby/object:Pawn
+      position:
+      - 6
+      - 1
+      color: :white
+      mark: !ruby/string
+        str: P
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: P
+          background: 9
+          mode: 0
+      move_diff:
+      - - -1
+        - 0
+      - - -2
+        - 0
+      capture_diff:
+      - - -1
+        - 1
+      - - -1
+        - -1
+    - 
+    - !ruby/object:Pawn
+      position:
+      - 6
+      - 3
+      color: :white
+      mark: !ruby/string
+        str: P
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: P
+          background: 9
+          mode: 0
+      move_diff:
+      - - -1
+        - 0
+      - - -2
+        - 0
+      capture_diff:
+      - - -1
+        - 1
+      - - -1
+        - -1
+    - !ruby/object:Pawn
+      position:
+      - 6
+      - 4
+      color: :white
+      mark: !ruby/string
+        str: P
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: P
+          background: 9
+          mode: 0
+      move_diff:
+      - - -1
+        - 0
+      - - -2
+        - 0
+      capture_diff:
+      - - -1
+        - 1
+      - - -1
+        - -1
+    - !ruby/object:Pawn
+      position:
+      - 6
+      - 5
+      color: :white
+      mark: !ruby/string
+        str: P
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: P
+          background: 9
+          mode: 0
+      move_diff:
+      - - -1
+        - 0
+      - - -2
+        - 0
+      capture_diff:
+      - - -1
+        - 1
+      - - -1
+        - -1
+    - !ruby/object:Pawn
+      position:
+      - 6
+      - 6
+      color: :white
+      mark: !ruby/string
+        str: P
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: P
+          background: 9
+          mode: 0
+      move_diff:
+      - - -1
+        - 0
+      - - -2
+        - 0
+      capture_diff:
+      - - -1
+        - 1
+      - - -1
+        - -1
+    - 
+  - - !ruby/object:Rook
+      position:
+      - 7
+      - 0
+      color: :white
+      mark: !ruby/string
+        str: R
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: R
+          background: 9
+          mode: 0
+      move_vector:
+      - - 1
+        - 0
+      - - -1
+        - 0
+      - - 0
+        - 1
+      - - 0
+        - -1
+    - !ruby/object:Knight
+      position:
+      - 7
+      - 1
+      color: :white
+      mark: !ruby/string
+        str: N
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: N
+          background: 9
+          mode: 0
+      move_diff:
+      - - 1
+        - 2
+      - - -1
+        - 2
+      - - 2
+        - 1
+      - - 2
+        - -1
+      - - 1
+        - -2
+      - - -1
+        - -2
+      - - -2
+        - -1
+      - - -2
+        - 1
+    - !ruby/object:Bishop
+      position:
+      - 7
+      - 2
+      color: :white
+      mark: !ruby/string
+        str: B
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: B
+          background: 9
+          mode: 0
+      move_vector:
+      - - 1
+        - 1
+      - - 1
+        - -1
+      - - -1
+        - 1
+      - - -1
+        - -1
+    - 
+    - !ruby/object:King
+      position:
+      - 7
+      - 4
+      color: :white
+      mark: !ruby/string
+        str: K
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: K
+          background: 9
+          mode: 0
+      move_diff:
+      - - 1
+        - 1
+      - - 1
+        - -1
+      - - -1
+        - 1
+      - - -1
+        - -1
+      - - 1
+        - 0
+      - - -1
+        - 0
+      - - 0
+        - 1
+      - - 0
+        - -1
+    - !ruby/object:Bishop
+      position:
+      - 7
+      - 5
+      color: :white
+      mark: !ruby/string
+        str: B
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: B
+          background: 9
+          mode: 0
+      move_vector:
+      - - 1
+        - 1
+      - - 1
+        - -1
+      - - -1
+        - 1
+      - - -1
+        - -1
+    - !ruby/object:Knight
+      position:
+      - 7
+      - 6
+      color: :white
+      mark: !ruby/string
+        str: N
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: N
+          background: 9
+          mode: 0
+      move_diff:
+      - - 1
+        - 2
+      - - -1
+        - 2
+      - - 2
+        - 1
+      - - 2
+        - -1
+      - - 1
+        - -2
+      - - -1
+        - -2
+      - - -2
+        - -1
+      - - -2
+        - 1
+    - !ruby/object:Rook
+      position:
+      - 7
+      - 7
+      color: :white
+      mark: !ruby/string
+        str: R
+        background: 9
+        mode: 0
+        uncolorized: !ruby/string
+          str: R
+          background: 9
+          mode: 0
+      move_vector:
+      - - 1
+        - 0
+      - - -1
+        - 0
+      - - 0
+        - 1
+      - - 0
+        - -1
