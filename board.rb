@@ -6,7 +6,7 @@ class MoveError < RuntimeError
 end
 
 class Board
-  attr_accessor :grid
+  attr_accessor :grid, :stalemate
 
   def initialize
     @grid = Array.new(8) { Array.new(8) }
@@ -18,7 +18,7 @@ class Board
     puts "\#    abcdefgh  \#"
     puts "\#    ________  \#"
     @grid.each_with_index do |row, index|
-      print "\# #{index + 1} |"
+      print "\# #{8 - index} |"
       row.each do |piece|
         if piece
           if piece.color == :white
@@ -39,31 +39,29 @@ class Board
   end
 
   def generate_pieces
-    @grid[0][0] = Rook.new([0,0], :black)
-    @grid[0][1] = Knight.new([0,1], :black)
-    @grid[0][2] = Bishop.new([0,2], :black)
-    @grid[0][3] = Queen.new([0,3], :black)
-    @grid[0][4] = King.new([0,4], :black)
-    @grid[0][5] = Bishop.new([0,5], :black)
-    @grid[0][6] = Knight.new([0,6], :black)
-    @grid[0][7] = Rook.new([0,7], :black)
+    generate_base_row(:black)
+    generate_pawns(:black)
+    generate_base_row(:white)
+    generate_pawns(:white)
+  end
 
+  def generate_pawns(color)
+    row = color == :black ? 1 : 6
     8.times do |index|
-      @grid[1][index] = Pawn.new([1,index], :black)
+      @grid[row][index] = Pawn.new([row,index], color)
     end
+  end
 
-    @grid[7][0] = Rook.new([7,0], :white)
-    @grid[7][1] = Knight.new([7,1], :white)
-    @grid[7][2] = Bishop.new([7,2], :white)
-    @grid[7][3] = Queen.new([7,3], :white)
-    @grid[7][4] = King.new([7,4], :white)
-    @grid[7][5] = Bishop.new([7,5], :white)
-    @grid[7][6] = Knight.new([7,6], :white)
-    @grid[7][7] = Rook.new([7,7], :white)
-
-    8.times do |index|
-      @grid[6][index] = Pawn.new([6,index], :white)
-    end
+  def generate_base_row(color)
+    row = color == :black ? 0 : 7
+    @grid[row][0] = Rook.new([row,0], color)
+    @grid[row][1] = Knight.new([row,1], color)
+    @grid[row][2] = Bishop.new([row,2], color)
+    @grid[row][3] = Queen.new([row,3], color)
+    @grid[row][4] = King.new([row,4], color)
+    @grid[row][5] = Bishop.new([row,5], color)
+    @grid[row][6] = Knight.new([row,6], color)
+    @grid[row][7] = Rook.new([row,7], color)
   end
 
   def get_piece_at_position(position)
@@ -82,8 +80,11 @@ class Board
   def piece_in_the_way?(from_pos, to_pos)
     vector = [to_pos[0] - from_pos[0], to_pos[1] - from_pos[1]]
     vector.map! do |element|
-      return 0 if element == 0
-      element / element.abs
+      if element == 0
+        0
+      else
+        element / element.abs
+      end
     end
     positions_between = []
     position = from_pos
@@ -105,13 +106,54 @@ class Board
   def move(from_pos, to_pos)
     piece = get_piece_at_position(from_pos)
     raise MoveError, "No piece at that position" if piece.nil?
-    if valid_move?(from_pos, to_pos) && !check?(piece.color)
+    if valid_move?(from_pos, to_pos) && try_move(from_pos, to_pos)
       @grid[from_pos[0]][from_pos[1]] = nil
       piece.move(to_pos)
       @grid[to_pos[0]][to_pos[1]] = piece
-    elsif check?(piece.color)
+      if piece.is_a?(Pawn)
+        pawn_promotion(piece)
+      end
+    else
       raise MoveError, "This leaves #{piece.color} in check!"
     end
+    true
+  end
+
+  def pawn_promotion(piece)
+    if  (piece.color == :white && piece.position[0] == 0) ||
+        (piece.color == :black && piece.position[0] == 7)
+      begin
+        puts "What kind of piece would you like? (R, N, B, Q)"
+        input = gets.chomp.upcase
+        case input
+        when "R"
+          new_piece = Rook.new(piece.position, piece.color)
+        when "N"
+          new_piece = Knight.new(piece.position, piece.color)
+        when "B"
+          new_piece = Bishop.new(piece.position, piece.color)
+        when "Q"
+          new_piece = Queen.new(piece.position, piece.color)
+        else
+          raise Exception
+        end
+      rescue
+        retry
+      end
+      @grid[piece.position[0]][piece.position[1]] = new_piece
+    end
+  end
+
+
+  def try_move(from_pos, to_pos)
+    dupped_board = dup_board
+    dupped_piece = dup_board.grid[from_pos[0]][from_pos[1]]
+
+    dupped_board.grid[from_pos[0]][from_pos[1]] = nil
+    dupped_piece.move(to_pos)
+    dupped_board.grid[to_pos[0]][to_pos[1]] = dupped_piece
+
+    return false if dupped_board.check?(dupped_piece.color)
     true
   end
 
@@ -127,13 +169,12 @@ class Board
   def valid_pawn_move?(piece, from_pos, to_pos)
     if !position_empty?(to_pos) && @grid[to_pos[0]][to_pos[1]].color == piece.color
       raise MoveError, "Can't capture own piece"
-      # get new move
     elsif !position_empty?(to_pos) && !piece.possible_moves(true).include?(to_pos)
       raise MoveError, "That piece cannot move there."
-      #get new move
     elsif position_empty?(to_pos) && !piece.possible_moves.include?(to_pos)
       raise MoveError, "That piece cannot move there."
-      # get new move
+    elsif piece_in_the_way?(from_pos, to_pos)
+      raise MoveError, "Piece in the way"
     end
     return true
   end
@@ -141,13 +182,10 @@ class Board
   def valid_nonpawn_move?(piece, from_pos, to_pos)
     if !position_empty?(to_pos) && @grid[to_pos[0]][to_pos[1]].color == piece.color
       raise MoveError, "Can't capture own piece"
-      # get new move
     elsif piece.is_a?(SlidingPiece) && piece_in_the_way?(from_pos, to_pos)
       raise MoveError, "Piece in the way"
-      # get new move
     elsif !piece.possible_moves.include?(to_pos)
       raise MoveError, "That piece cannot move there."
-      # get new move
     end
     return true
   end
@@ -167,7 +205,8 @@ class Board
   end
 
   def checkmate?(current_color)
-    my_pieces = get_pieces(current_color) #get all of my pieces
+    current_check = check?(current_color)
+    my_pieces = get_pieces(current_color)
     possible_moves = []
     my_pieces.each do |piece|
       piece.possible_moves.each do |possible_move|
@@ -179,16 +218,30 @@ class Board
         possible_moves << [piece.position, possible_move]
       end
     end
-    possible_moves.all? do |possible_move|
-      dupped_board = dup_board
+
+    all_in_check = possible_moves.all? do |possible_move|
+      checkmate = false
+      dupped_board = self.dup_board
       begin
         dupped_board.move(possible_move[0], possible_move[1])
       rescue MoveError
-        return true
+        checkmate = true
+      else
       end
-      return false
+      checkmate
+    end
+
+    if current_check && all_in_check
+      return true
+    elsif all_in_check
+      @stalemate = true
+      return true
     end
   end
+
+  # def stalemate
+  #   @stalemate = true
+  # end
 
   def dup_board
     dupped_grid = Array.new(8) { Array.new(8) }
@@ -235,3 +288,4 @@ end
 
 # b = Board.new
 # b.print_board
+# b.move
